@@ -24,15 +24,40 @@ First, clone the repo:
 git clone https://github.com/FaztWeb/pern-stack
 ```
 
-to run the backend you can use docker:
+To run Postgres you can use docker:
 
-```
-cd server
+```bash
+cd pern-stack
 docker-compose up
 ```
 
-to run the frontend:
+After running postgres you can configure the DB access. In the ```src/config.js``` file add:
+
+```js
+	password: process.env.DB_PASSWORD || "faztpassword",
 ```
-cd client
+
+By default the DB user in the [dockerized image](https://hub.docker.com/_/postgres/) is "postgres" and the password configured in the ```docker-compose.yml``` is "faztpassword".
+
+To run the backend (in the root directory of the repository):
+
+```bash
+npm install
 npm start
 ```
+
+to run the frontend:
+
+```bash
+cd client
+npm install
+npm start
+```
+
+On a browser you can now visit:
+
+- http://localhost:3000 for the frontend client React App.
+- http://localhost:4000/tasks to check the backend (will return a JSON).
+- http://localhost:8080/browser/ to access postgres administration.
+
+To get the postgress usr/psw check in the ```docker-compose.yml``` file the ```ui > environment``` section. It will have the PGADMIN_DEFAULT_EMAIL & PGADMIN_DEFAULT_PASSWORD.
